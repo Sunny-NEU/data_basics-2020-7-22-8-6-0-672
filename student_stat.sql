@@ -10,9 +10,9 @@ CREATE PROCEDURE calc_student_stat()
  BEGIN
 CREATE TABLE student_stat as
 (
-select a.student_id,a.name,b.subject_id,a.subject,a.teacher,a.score,b.sum_score,ROUND(CAST(a.score AS DOUBLE)/b.sum_score,2) rate,c.avg_score
+select a.name,a.subject,a.teacher,a.score,b.total_score,concat(TRUNCATE((a.score AS DOUBLE)/b.total_score,2),'%') score_rate,c.avg_score
 from 
-(select t.id student_id,t1.subject_id,SUM(t1.score) sum_score
+(select t.id student_id,t1.subject_id,SUM(t1.score) total_score
 from student t
 left join score t1
   on t.id=t1.student_id
